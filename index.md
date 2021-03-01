@@ -1,37 +1,47 @@
-## Welcome to GitHub Pages
+### Lab 3
 
-You can use the [editor on GitHub](https://github.com/rmwilliamson/Data310-Lab_3/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
-
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
-
-### Markdown
-
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+### Question 3
+# Write your own code to import L3Data.csv into python as a data frame. Then save the feature values  'days online','views','contributions','answers' into a matrix x and consider 'Grade' values as the dependent variable. If you separate the data into Train & Test with test_size=0.25 and random_state = 1234. If we use the features of x to build a multiple linear regression model for predicting y then the root mean square error on the test data is close to:
 
 ```markdown
-Syntax highlighted code block
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import Ridge
+from yellowbrick.regressor import ResidualsPlot
 
-# Header 1
-## Header 2
-### Header 3
+df = pd.read_csv('drive/MyDrive/Colab Notebooks/L3Data.csv')
+y = df['Grade'].values
+X = df.loc[ : , df.columns != 'Grades'].values
+X = df.loc[ : , df.columns != 'Questions'].values
 
-- Bulleted
-- List
+from sklearn.preprocessing import StandardScaler
+scale = StandardScaler()
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=1234)
 
-1. Numbered
-2. List
+# scale the data
+Xs_train = scale.fit_transform(X_train)
+Xs_test  = scale.transform(X_test)
 
-**Bold** and _Italic_ and `Code` text
+from sklearn import linear_model
+lm = linear_model.LinearRegression()
 
-[Link](url) and ![Image](src)
+# fit the model and make prediction
+lm.fit(Xs_train,y_train)
+y_pred = lm.predict(Xs_test)
+
+from sklearn.metrics import mean_squared_error
+mse = mean_squared_error(y_test,y_pred)
+math.sqrt(mse)
+```
+## Answer
+
+
+
+### Question 7
+# Write your own code to import L3Data.csv into python as a data frame. Then save the feature values  'days online','views','contributions','answers' into a matrix x and consider 'Grade' values as the dependent variable. If you separate the data into Train & Test with test_size=0.25 and random_state = 1234, then the number of observations we have in the Train data is
+
+```markdown
+len(X_train)
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/rmwilliamson/Data310-Lab_3/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+## Number of observations = 23
