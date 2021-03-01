@@ -10,22 +10,23 @@ from sklearn.linear_model import Ridge
 from yellowbrick.regressor import ResidualsPlot
 
 df = pd.read_csv('drive/MyDrive/Colab Notebooks/L3Data.csv')
+
 y = df['Grade'].values
-X = df.loc[ : , df.columns != 'Grades'].values
-X = df.loc[ : , df.columns != 'Questions'].values
+X = df.loc[ : , df.columns != 'Grade'].values
+X = df.loc[ : , df.columns != ('questions' and 'Grade')].values
 
 from sklearn.preprocessing import StandardScaler
 scale = StandardScaler()
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=1234)
 
-### scale the data
+# scale the data
 Xs_train = scale.fit_transform(X_train)
 Xs_test  = scale.transform(X_test)
 
 from sklearn import linear_model
 lm = linear_model.LinearRegression()
 
-### fit the model and make prediction
+# fit the model and make prediction
 lm.fit(Xs_train,y_train)
 y_pred = lm.predict(Xs_test)
 
