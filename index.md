@@ -12,7 +12,7 @@ from yellowbrick.regressor import ResidualsPlot
 df = pd.read_csv('drive/MyDrive/Colab Notebooks/L3Data.csv')
 
 y = df['Grade'].values
-X = df.loc[ : , df.columns != ('questions' and 'Grade')].values
+X = df[['days online', 'views', 'contributions', 'answers']].values
 
 from sklearn.preprocessing import StandardScaler
 scale = StandardScaler()
