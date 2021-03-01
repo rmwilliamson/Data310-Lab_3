@@ -33,7 +33,7 @@ from sklearn.metrics import mean_squared_error
 mse = mean_squared_error(y_test,y_pred)
 math.sqrt(mse)
 ```
-## Answer
+## Answer: 8.3245
 
 
 
